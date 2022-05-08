@@ -24,7 +24,7 @@ And deploy with:
 
 ```bash
 FUNCTION_NAME="ProxyRequest"
-GO_RUNTIME="go113"
+GO_RUNTIME="go116"
 
 gcloud functions deploy \
   "${FUNCTION_NAME}" \
