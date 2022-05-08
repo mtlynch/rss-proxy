@@ -42,7 +42,7 @@ jobs:
           command: |
             echo "TARGET_URL: '${TARGET_URL}'" >> .env.yaml
       - run:
-          name: Deploy to AppEngine
+          name: Deploy as Google Cloud Function
           command: |
             gcloud functions deploy \
               "${FUNCTION_NAME}" \
