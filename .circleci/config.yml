@@ -38,16 +38,12 @@ jobs:
           name: Configure gcloud project
           command: gcloud config set project "${GCLOUD_PROJECT}"
       - run:
-          name: Configure runtime environment variables
-          command: |
-            echo "TARGET_URL: '${TARGET_URL}'" >> .env.yaml
-      - run:
           name: Deploy as Google Cloud Function
           command: |
             gcloud functions deploy \
               "${FUNCTION_NAME}" \
               --runtime "${GO_RUNTIME}" \
-              --env-vars-file .env.yaml \
+              --set-env-vars="TARGET_URL=${TARGET_URL}" \
               --source proxy \
               --trigger-http \
               --allow-unauthenticated
