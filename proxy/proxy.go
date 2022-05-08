@@ -14,12 +14,14 @@ func ProxyRequest(w http.ResponseWriter, r *http.Request) {
 	c := &http.Client{
 		Timeout: time.Second * 10,
 	}
+	log.Printf("proxying request to %s", targetURL)
 	resp, err := c.Get(targetURL)
 	if err != nil {
 		log.Printf("could not reach target RSS feed: %s", err)
 		http.Error(w, "Failed to call remote RSS feed", http.StatusInternalServerError)
 		return
 	}
+	log.Printf("got response %d", resp.StatusCode)
 
 	copyHeaders(resp.Header, w.Header(), []string{"content-type", "cache-control", "access-control-allow-origin", "etag", "content-length"})
 	w.WriteHeader(resp.StatusCode)
