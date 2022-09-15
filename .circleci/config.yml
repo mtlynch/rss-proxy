@@ -17,13 +17,20 @@ jobs:
     docker:
       - image: google/cloud-sdk:351.0.0-slim
     environment:
-      GCLOUD_PROJECT: dusty-vcr
+      #GCLOUD_PROJECT: specify-your-gcp-project
       GO_RUNTIME: go116
       FUNCTION_NAME: ProxyRequest
     steps:
       - checkout
       - attach_workspace:
           at: ./
+      - run:
+          name: Check if a GCP project is specified
+          command: |
+            if [[ -z "${GCLOUD_PROJECT}" ]]; then
+              echo "No GCP project specified - set one with GCLOUD_PROJECT"
+              circleci-agent step halt
+            fi
       - run:
           name: Retrieve client secret from CircleCI
           command: |
