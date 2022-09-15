@@ -21,7 +21,7 @@ func ProxyRequest(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Failed to call remote RSS feed", http.StatusInternalServerError)
 		return
 	}
-	log.Printf("got response %d", resp.StatusCode)
+	log.Printf("got response %d, etag=%v", resp.StatusCode, resp.Header.Get("etag"))
 
 	copyHeaders(resp.Header, w.Header(), []string{"content-type", "cache-control", "access-control-allow-origin", "etag", "content-length"})
 	w.WriteHeader(resp.StatusCode)
